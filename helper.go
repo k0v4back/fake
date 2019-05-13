@@ -22,13 +22,17 @@ func Split(file []byte) []string {
 	return fileLines
 }
 
-func RandInt(fileLines []string) string {
-	return fileLines[rand.Intn(len(fileLines))]
+func RandomIntForFiles(fileLines []string) string {
+	return fileLines[RandomInt(0, len(fileLines))]
 }
 
-func CheckExistsSex(sex string) bool {
-	if sex == MALE || sex == FEMALE {
-		return true
-	}
-	return false
+func RandomInt(min, max int) int {
+	rand.Seed(time.Now().UnixNano())
+	return rand.Intn(max - min) + min
+}
+
+func RandomLanguage() string {
+	languages := []string{"ru", "en", "de"}
+	random := RandomInt(0, len(languages))
+	return languages[random]
 }

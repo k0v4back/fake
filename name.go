@@ -1,14 +1,8 @@
 package faker
 
-import (
-	"math/rand"
-	"time"
-)
-
 func RandSex() string {
 	sex := MALE
-	rand.Seed(time.Now().UnixNano())
-	if rand.Intn(2) == 1 {
+	if RandomInt(1, 2) == 1 {
 		sex = FEMALE
 	}
 	return sex
@@ -37,7 +31,7 @@ func FirstName(language string) string {
 	sex := RandSex()
 	file := ReadFile(language, sex + FIRSTNAMES)
 	fileLines := Split(file)
-	return RandInt(fileLines)
+	return RandomIntForFiles(fileLines)
 }
 
 //LastName return the last name of random sex
@@ -45,7 +39,7 @@ func LastName(language string) string {
 	sex := RandSex()
 	file := ReadFile(language, sex + LASTNAMES)
 	fileLines := Split(file)
-	return RandInt(fileLines)
+	return RandomIntForFiles(fileLines)
 }
 
 //FirstName return the first name of specific sex
@@ -53,7 +47,7 @@ func SexFirstName(language, sex string) string {
 	if CheckExistsSex(sex) {
 		file := ReadFile(language, sex + FIRSTNAMES)
 		fileLines := Split(file)
-		return RandInt(fileLines)
+		return RandomIntForFiles(fileLines)
 	}
 	return "Wrong sex"
 }
@@ -63,7 +57,14 @@ func SexLastName(language, sex string) string {
 	if CheckExistsSex(sex) {
 		file := ReadFile(language, sex + LASTNAMES)
 		fileLines := Split(file)
-		return RandInt(fileLines)
+		return RandomIntForFiles(fileLines)
 	}
 	return "Wrong sex"
+}
+
+func CheckExistsSex(sex string) bool {
+	if sex == MALE || sex == FEMALE {
+		return true
+	}
+	return false
 }
